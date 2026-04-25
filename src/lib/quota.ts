@@ -15,7 +15,7 @@ const CREATOR_MONTHLY_LIMITS: Record<string, number> = {
   caption: Infinity,
   hashtag: Infinity,
   trend: 0,
-  voiceover: 0,
+  voiceover: 0, // PRO only
 };
 
 export type QuotaResult = { allowed: true } | { allowed: false; reason: string; resetAt?: Date };

@@ -1,5 +1,45 @@
 # PROGRESS.md — ViralHook.id
 
+## ✅ FASE 6 — Voice-Over Export (PRO)
+
+**Status:** Selesai
+**Tanggal:** 2026-04-25
+
+### Yang Sudah Dibuat
+
+- `src/lib/validations/voiceover.ts` — Zod schema input/output + PACE_COLORS, PACE_LABELS, SPEED_RATES
+- `src/lib/ai/prompts/voiceover.ts` — System prompt + user prompt builder
+- `src/app/api/generate/voiceover/route.ts` — POST endpoint (PRO only via quota)
+- `src/app/(dashboard)/dashboard/voiceover/page.tsx` — UI dengan upgrade gate + preview TTS + export
+
+### Fitur UI
+
+- **Upgrade gate**: Non-PRO user lihat feature preview + tombol upgrade
+- Form: textarea script, kecepatan bicara, gaya bicara
+- Hasil: segmen dengan color-coded pace (biru=lambat, default=normal, oranye=cepat)
+- Bold text untuk segmen emphasis, `[jeda]` marker setelah kalimat penting
+- **Preview TTS**: tombol Play/Stop via browser `speechSynthesis` API (Indonesian `id-ID`)
+- **Download .txt**: download optimized script sebagai file teks
+- **Copy**: copy full script ke clipboard
+- Speaking tips card di bawah segments
+
+### Flow Teknis
+
+1. User paste script → pilih kecepatan + gaya → klik Optimize
+2. AI (haiku model) menganalisis script → pecah jadi segmen dengan pace/emphasis/pause markers
+3. Preview: `SpeechSynthesisUtterance` dengan `lang="id-ID"`, rate sesuai kecepatan yang dipilih
+4. Export: `Blob` → `URL.createObjectURL` → download `voiceover-script.txt`
+
+### Acceptance Criteria
+
+- [x] Non-PRO user lihat upgrade gate (bukan error)
+- [x] Segmen dengan pace markers warna
+- [x] Browser TTS preview dengan kecepatan yang benar
+- [x] Download .txt berfungsi
+- [x] Speaking tips dari AI
+
+---
+
 ## ✅ FASE 5 — Trend Scanner (PRO)
 
 **Status:** Selesai
