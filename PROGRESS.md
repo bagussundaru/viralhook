@@ -1,5 +1,44 @@
 # PROGRESS.md — ViralHook.id
 
+## ✅ FASE 2 — Script Generator
+
+**Status:** Selesai
+**Tanggal:** 2026-04-25
+
+### Yang Sudah Dibuat
+
+- `src/lib/validations/script.ts` — Zod schema input/output + konstanta (CTA_TYPE_OPTIONS, SEGMENT_COLORS, SEGMENT_LABELS)
+- `src/lib/ai/prompts/script.ts` — System prompt + user prompt builder dengan timing struktur
+- `src/app/api/generate/script/route.ts` — POST endpoint: validasi → quota → AI (claude-sonnet-4) → parse → simpan DB
+- `src/app/(dashboard)/dashboard/script/page.tsx` — UI form + hasil dengan tab segmen + teleprompter
+
+### Fitur UI
+
+- Form: hook textarea, topik, niche/tone/audiens, durasi (15/30/60s toggle), CTA switch + tipe CTA
+- Pre-fill otomatis dari query params ketika navigasi dari hook page
+- Hasil Tab "Per Segmen": tiap segmen dengan timing, warna per tipe, copy per segmen
+- Hasil Tab "Teleprompter": hook kuning, CTA ungu, font besar untuk dibaca saat syuting
+- B-Roll suggestions di bawah script
+- Tombol "Buat Script" di halaman hook → navigasi ke /dashboard/script dengan hook + context
+
+### Cara Test
+
+1. Dari `/dashboard/hook`, generate hook → klik ikon FileText → terbuka script page pre-filled
+2. Atau langsung ke `/dashboard/script`, isi form manual → klik Generate Script
+3. Cek tab Per Segmen dan Teleprompter
+4. Coba copy per segmen dan copy semua
+
+### Acceptance Criteria
+
+- [x] Generate script dari hook dalam < 15 detik
+- [x] Timing per segmen sesuai durasi (15/30/60s)
+- [x] Mode teleprompter dengan highlight warna
+- [x] B-Roll suggestions muncul
+- [x] Integrasi dari hook page (pre-fill via query params)
+- [x] UsageLog terisi dengan model, token, cost, latency
+
+---
+
 ## ✅ FASE 1 — Hook Generator
 
 **Status:** Selesai

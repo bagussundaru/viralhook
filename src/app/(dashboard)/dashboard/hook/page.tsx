@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -24,9 +25,16 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Zap, Loader2, Copy, Star, RefreshCw, CheckCheck, Sparkles } from "lucide-react";
+import { Zap, Loader2, Copy, Star, RefreshCw, CheckCheck, Sparkles, FileText } from "lucide-react";
 
 type HookResult = HookItem & { id: string; favorited: boolean };
+
+// Simpan form values ke sessionStorage supaya script page bisa pakai
+function saveFormToSession(data: HookGenerateInput) {
+  if (typeof window !== "undefined") {
+    sessionStorage.setItem("hook_form_values", JSON.stringify(data));
+  }
+}
 
 const NICHE_LABELS: Record<string, string> = {
   kuliner: "Kuliner 🍜",
@@ -52,6 +60,7 @@ const TONE_LABELS: Record<string, string> = {
 };
 
 export default function HookGeneratorPage() {
+  const router = useRouter();
   const [hooks, setHooks] = useState<HookResult[]>([]);
   const [generationId, setGenerationId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -99,6 +108,7 @@ export default function HookGeneratorPage() {
         favorited: false,
       }))
     );
+    saveFormToSession(data);
   };
 
   const copyHook = async (text: string, id: string) => {
@@ -368,6 +378,26 @@ export default function HookGeneratorPage() {
                         ) : (
                           <Copy className="h-4 w-4" />
                         )}
+                      </Button>
+                      {/* Buat Script */}
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        className="text-blue-500"
+                        title="Buat script dari hook ini"
+                        onClick={() => {
+                          const formVals = watch();
+                          const params = new URLSearchParams({
+                            hook: hook.text,
+                            topic: formVals.topic ?? "",
+                            niche: formVals.niche ?? "kuliner",
+                            tone: formVals.tone ?? "gaul",
+                            audience: formVals.audience ?? "Gen Z",
+                          });
+                          router.push(`/dashboard/script?${params.toString()}`);
+                        }}
+                      >
+                        <FileText className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
