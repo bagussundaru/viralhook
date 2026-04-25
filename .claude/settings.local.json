@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx shadcn@latest add card input label dropdown-menu avatar badge separator toast --yes)",
+      "Bash(grep -E \"^prisma$|^better-auth$|react-hook-form|@hookform\")"
+    ],
+    "additionalDirectories": ["/home/ubuntu/viralhook/src/app/api/auth"]
+  }
+}
