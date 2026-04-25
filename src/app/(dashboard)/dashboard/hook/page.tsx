@@ -25,7 +25,17 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Zap, Loader2, Copy, Star, RefreshCw, CheckCheck, Sparkles, FileText } from "lucide-react";
+import {
+  Zap,
+  Loader2,
+  Copy,
+  Star,
+  RefreshCw,
+  CheckCheck,
+  Sparkles,
+  FileText,
+  Hash,
+} from "lucide-react";
 
 type HookResult = HookItem & { id: string; favorited: boolean };
 
@@ -399,6 +409,26 @@ export default function HookGeneratorPage() {
                       >
                         <FileText className="h-4 w-4" />
                       </Button>
+                      {/* Buat Caption */}
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        className="text-purple-500"
+                        title="Buat caption dari hook ini"
+                        onClick={() => {
+                          const formVals = watch();
+                          const params = new URLSearchParams({
+                            hook: hook.text,
+                            topic: formVals.topic ?? "",
+                            niche: formVals.niche ?? "kuliner",
+                            tone: formVals.tone ?? "gaul",
+                            audience: formVals.audience ?? "Gen Z",
+                          });
+                          router.push(`/dashboard/caption?${params.toString()}`);
+                        }}
+                      >
+                        <Hash className="h-4 w-4" />
+                      </Button>
                     </div>
                   </div>
                 </CardContent>
@@ -407,8 +437,7 @@ export default function HookGeneratorPage() {
           </div>
 
           <p className="text-muted-foreground pt-2 text-center text-xs">
-            ⭐ Klik bintang untuk simpan favorit · 🔄 Klik refresh untuk generate ulang satu hook ·
-            📋 Klik copy untuk salin
+            ⭐ Simpan favorit · 🔄 Generate ulang · 📋 Copy · 📄 Buat script · #️⃣ Buat caption
           </p>
         </div>
       )}

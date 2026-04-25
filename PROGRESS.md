@@ -1,5 +1,45 @@
 # PROGRESS.md — ViralHook.id
 
+## ✅ FASE 3 — Caption & Hashtag Generator
+
+**Status:** Selesai
+**Tanggal:** 2026-04-25
+
+### Yang Sudah Dibuat
+
+- `src/lib/validations/caption.ts` — Zod schema input/output + konstanta (CAPTION_STYLE_LABELS, CAPTION_STYLE_DESC)
+- `src/lib/ai/prompts/caption.ts` — System prompt + user prompt builder
+- `src/app/api/generate/caption/route.ts` — POST endpoint: validasi → quota → AI (claude-3-5-haiku) → parse → simpan DB
+- `src/app/(dashboard)/dashboard/caption/page.tsx` — UI form + 3 variasi caption + 3 set hashtag
+
+### Fitur UI
+
+- Form: topik, hook (opsional), niche, tone, platform, audience
+- Pre-fill dari query params (navigasi dari hook page)
+- 3 variasi caption (singkat/medium/storytelling) dengan copy per caption
+- Tombol "Copy + Hashtag Mix" untuk salin caption sekaligus dengan hashtag
+- 3 set hashtag (niche/mix/viral) dengan jumlah tag per set
+- Tips engagement AI di bawah hasil
+- Tombol "Buat Caption" (ikon #) di hook page → navigasi ke caption page pre-filled
+
+### Cara Test
+
+1. Dari `/dashboard/hook`, generate hook → klik ikon # (ungu) → terbuka caption page pre-filled
+2. Atau langsung ke `/dashboard/caption`, isi form → klik Generate
+3. Cek 3 variasi caption dan 3 set hashtag
+4. Coba "Copy + Hashtag Mix" untuk salin caption + hashtag sekaligus
+
+### Acceptance Criteria
+
+- [x] Generate 3 variasi caption (singkat/medium/storytelling)
+- [x] Generate 3 set hashtag (niche 10-12 tag / mix 20-22 tag / viral 25-28 tag)
+- [x] Copy per caption dan copy per hashtag set
+- [x] Integrasi hook opsional dalam caption
+- [x] Integrasi dari hook page (pre-fill via query params)
+- [x] UsageLog terisi dengan model, token, cost, latency
+
+---
+
 ## ✅ FASE 2 — Script Generator
 
 **Status:** Selesai
