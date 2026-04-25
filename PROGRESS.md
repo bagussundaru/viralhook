@@ -1,5 +1,52 @@
 # PROGRESS.md — ViralHook.id
 
+## ✅ FASE 4 — Subscription & Midtrans Payment
+
+**Status:** Selesai
+**Tanggal:** 2026-04-25
+
+### Yang Sudah Dibuat
+
+- `src/lib/plans.ts` — Konfigurasi plan FREE/CREATOR/PRO (harga, fitur, limit)
+- `src/lib/midtrans.ts` — Midtrans Snap client + webhook signature verifier
+- `src/app/api/billing/checkout/route.ts` — POST: buat Snap token + simpan order pending
+- `src/app/api/billing/webhook/route.ts` — POST: terima notifikasi Midtrans, update plan user
+- `src/app/pricing/page.tsx` — Halaman pricing public dengan 3 plan cards + FAQ
+- `src/app/(dashboard)/dashboard/billing/page.tsx` — Dashboard billing: plan aktif + upgrade flow
+
+### Flow Pembayaran
+
+1. User klik "Upgrade ke Creator" di `/dashboard/billing`
+2. POST `/api/billing/checkout` → server buat Snap token + simpan Subscription pending
+3. Client panggil `window.snap.pay(token)` → Midtrans Snap popup muncul
+4. User bayar via QRIS/GoPay/OVO/Transfer
+5. Midtrans kirim webhook ke `/api/billing/webhook`
+6. Server verifikasi SHA512 signature → update `User.plan` + `Subscription.status = "active"`
+
+### Plan & Harga
+
+| Plan    | Harga          | Hook      | Script    | Caption   |
+| ------- | -------------- | --------- | --------- | --------- |
+| FREE    | Gratis         | 5/hari    | —         | —         |
+| CREATOR | Rp 79.000/bln  | Unlimited | 50/bln    | Unlimited |
+| PRO     | Rp 149.000/bln | Unlimited | Unlimited | Unlimited |
+
+### Setup
+
+1. Isi `MIDTRANS_SERVER_KEY`, `MIDTRANS_CLIENT_KEY`, `NEXT_PUBLIC_MIDTRANS_CLIENT_KEY` di `.env.local`
+2. Set `MIDTRANS_ENV=sandbox` untuk testing, `production` untuk live
+3. Daftarkan webhook URL di Midtrans Dashboard: `https://viralhook.id/api/billing/webhook`
+
+### Acceptance Criteria
+
+- [x] Halaman pricing public dengan 3 plan + FAQ
+- [x] Billing dashboard dengan plan aktif + tombol upgrade
+- [x] Midtrans Snap popup terbuka saat klik upgrade
+- [x] Webhook update User.plan setelah pembayaran berhasil
+- [x] Signature verification untuk keamanan webhook
+
+---
+
 ## ✅ FASE 3 — Caption & Hashtag Generator
 
 **Status:** Selesai
