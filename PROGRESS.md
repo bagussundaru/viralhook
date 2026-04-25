@@ -1,5 +1,46 @@
 # PROGRESS.md — ViralHook.id
 
+## ✅ FASE 1 — Hook Generator
+
+**Status:** Selesai
+**Tanggal:** 2026-04-25
+
+### Yang Sudah Dibuat
+
+- `src/lib/validations/hook.ts` — Zod schema input/output + konstanta opsi
+- `src/lib/ai/prompts/hook.ts` — System prompt + user prompt builder
+- `src/lib/ai/client.ts` — Agent Router client (OpenAI-compatible) + cost estimator
+- `src/lib/quota.ts` — Quota checker untuk FREE/CREATOR/PRO plan
+- `src/app/api/generate/hook/route.ts` — POST endpoint: validasi → quota → AI → simpan DB
+- `src/app/api/generations/[id]/route.ts` — PATCH endpoint: update favorited
+- `src/app/(dashboard)/dashboard/hook/page.tsx` — UI form + 10 hasil hook
+
+### Fitur UI
+
+- Form: topik (textarea), niche, tone, platform, audiens (4 select)
+- Hasil 10 hook dengan badge framework + emosi
+- Per hook: copy, bintang favorit, regenerate satu hook
+- Copy semua hook sekaligus
+- Error handling quota (429) dan AI error (503)
+
+### Cara Test
+
+1. Pastikan `AGENT_ROUTER_API_KEY` dan `AGENT_ROUTER_BASE_URL` diisi di `.env.local`
+2. Jalankan `npm run dev`
+3. Login → buka `/dashboard/hook`
+4. Isi topik → klik Generate
+5. Cek 10 hook muncul, coba copy, favorite, regenerate
+
+### Acceptance Criteria
+
+- [x] Generate 10 hook dalam < 10 detik
+- [x] Quota free user ter-track (5/hari via UsageLog)
+- [x] Hasil tersimpan di tabel Generation
+- [x] Copy, favorite, regenerate per hook berfungsi
+- [x] UsageLog terisi dengan model, token, cost, latency
+
+---
+
 ## ✅ FASE 0 — Setup Proyek & Infrastruktur Dasar
 
 **Status:** Selesai  
