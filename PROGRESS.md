@@ -1,5 +1,39 @@
 # PROGRESS.md — ViralHook.id
 
+## ✅ FASE 5 — Trend Scanner (PRO)
+
+**Status:** Selesai
+**Tanggal:** 2026-04-25
+
+### Yang Sudah Dibuat
+
+- `src/lib/validations/trend.ts` — Zod schema input/output + DIFFICULTY_COLORS
+- `src/lib/ai/prompts/trend.ts` — System prompt + user prompt builder dengan tanggal aktual
+- `src/app/api/generate/trend/route.ts` — POST endpoint (PRO only via quota check)
+- `src/app/(dashboard)/dashboard/trends/page.tsx` — UI dengan upgrade gate + expandable trend cards
+- `src/lib/quota.ts` — Ditambah key `trend` (0 untuk FREE/CREATOR, unlimited untuk PRO)
+
+### Fitur UI
+
+- **Upgrade gate**: Non-PRO user lihat feature preview + tombol upgrade ke billing
+- Form: niche + platform selects
+- Hasil: 10 trend card collapsible dengan:
+  - Rank, topik, kategori, difficulty badge, estimasi views
+  - Expanded: kenapa trending, content angle, 2 suggested hooks
+  - Tombol "Buat Hook" → `/dashboard/hook?topic=...`
+  - Tombol "Buat Script" → `/dashboard/script?topic=...`
+- Tip engagement di bawah hasil
+
+### Acceptance Criteria
+
+- [x] Non-PRO user lihat upgrade gate (bukan error)
+- [x] PRO user bisa scan 10 trending topik
+- [x] Setiap topik ada hooks siap pakai + content angle
+- [x] Navigasi langsung ke hook/script generator dari trend
+- [x] Tanggal analisis aktual (dari server request date)
+
+---
+
 ## ✅ FASE 4 — Subscription & Midtrans Payment
 
 **Status:** Selesai

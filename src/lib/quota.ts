@@ -5,6 +5,7 @@ const FREE_DAILY_LIMITS: Record<string, number> = {
   script: 0,
   caption: 0,
   hashtag: 0,
+  trend: 0,
   voiceover: 0,
 };
 
@@ -13,6 +14,7 @@ const CREATOR_MONTHLY_LIMITS: Record<string, number> = {
   script: 50,
   caption: Infinity,
   hashtag: Infinity,
+  trend: 0,
   voiceover: 0,
 };
 
